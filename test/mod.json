@@ -1,0 +1,6 @@
+{
+    "name": "Test",
+    "version": "1.5",
+    "minGameVersion": "135",
+    "main": "test.TestMod"
+}

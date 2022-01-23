@@ -2,5 +2,5 @@
 **/.idea
 **/gradle
 **/build
-test/
+**/run
 credentials.json
