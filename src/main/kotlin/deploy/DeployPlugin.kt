@@ -42,16 +42,12 @@ open class DeployPlugin : Plugin<Project> {
         val run = project.runDir
         val mods = File("$run/mods/")
 
-        if (!buildDir.exists()) {
-            buildDir.mkdir()
+        if (!libs.exists()) {
+            libs.mkdir()
+        }
 
-            if (!libs.exists()) {
-                libs.mkdir()
-            }
-
-            if (!mindeployCache.exists()) {
-                mindeployCache.mkdir()
-            }
+        if (!mindeployCache.exists()) {
+            mindeployCache.mkdir()
         }
 
         if (!run.exists()) {
