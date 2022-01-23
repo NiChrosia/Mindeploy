@@ -29,3 +29,6 @@ Compiling mods is done via the gradle task `deployMod`, and `deployDexedMod` for
 ### Running
 
 Running your mod is done by the gradle task `runMindustry`. Do note that this requires having `mindustryVersion` set in your gradle.properties, as a mindustry tag, i.e. v135.
+
+Mindeploy automatically generates a `run/` directory to store the Mindustry instance, allowing for easy modification & the ability to use multiple different versions (across your device.)
+(The way this works is by setting the `MINDUSTRY_DATA_DIR` environment variable in the `runMindustry` task.)
