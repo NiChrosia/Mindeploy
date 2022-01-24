@@ -1,7 +1,8 @@
 pluginManagement {
     repositories {
         mavenCentral()
-        mavenLocal()
         gradlePluginPortal()
+
+        maven { setUrl("https://repsy.io/mvn/nichrosia/default/") }
     }
 }

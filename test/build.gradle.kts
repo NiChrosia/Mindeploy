@@ -2,9 +2,10 @@ import deploy.DeployExtension
 
 plugins {
     kotlin("jvm") version "1.6.0"
+    id("nichrosia.mindeploy") version "0.2"
 }
 
-apply(plugin = "nichrosia.deploy-mindustry")
+apply(plugin = "nichrosia.mindeploy")
 
 val mindustryVersion: String by extra
 val kotlinVersion: String by extra

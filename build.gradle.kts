@@ -33,7 +33,7 @@ plugins {
 base {
     group = "nichrosia"
     archivesName.set("deploy")
-    version = "0.1.2"
+    version = "0.2.2"
 }
 
 java {
@@ -55,7 +55,7 @@ gradlePlugin {
     plugins {
         create("base") {
             id = "nichrosia.mindeploy"
-            implementationClass = "deploy.DeployPlugin"
+            implementationClass = "mindeploy.Mindeploy"
         }
     }
 }

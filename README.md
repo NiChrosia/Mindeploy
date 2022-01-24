@@ -18,7 +18,7 @@ pluginManagement {
 
 // build.gradle(.kts)
 plugins {
-    id("nichrosia.mindeploy") version "0.1.2"
+    id("nichrosia.mindeploy") version "0.2.2"
 }
 ```
 
