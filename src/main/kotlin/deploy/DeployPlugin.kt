@@ -119,7 +119,7 @@ open class DeployPlugin : Plugin<Project> {
                 })
 
                 from(projectDir) {
-                    include("mod.hjson", "mod.json")
+                    include("mod.hjson", "mod.json", "plugin.hjson", "plugin.json")
                     include("icon.png")
                     include("preview.png")
                 }

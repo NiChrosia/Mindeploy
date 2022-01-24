@@ -33,7 +33,7 @@ plugins {
 base {
     group = "nichrosia"
     archivesName.set("deploy")
-    version = "0.1.1"
+    version = "0.1.2"
 }
 
 java {
