@@ -18,7 +18,7 @@ pluginManagement {
 
 // build.gradle(.kts)
 plugins {
-    id("nichrosia.mindeploy") version "0.2.2"
+    id("nichrosia.mindeploy") version "0.3"
 }
 ```
 
@@ -32,3 +32,9 @@ Running your mod is done by the gradle task `runMindustry`. Do note that this re
 
 Mindeploy automatically generates a `run/` directory to store the Mindustry instance, allowing for easy modification & the ability to use multiple different versions (across your device.)
 (The way this works is by setting the `MINDUSTRY_DATA_DIR` environment variable in the `runMindustry` task.)
+
+#### Plugins
+
+Due to a weird bug with IntelliJ (input in run/debug is disabled), a custom run configuration must be created to run a server. To do such, open up IntelliJ's run configuration screen,
+and add a shell script. Make the run directory `run/modded/server/`, toggle 'Script file' to 'Script text', and insert '../../../build/libs/Mindustry-Server-version.jar',
+with version being the desired Mindustry tag specified in `gradle.properties`. This will eventually be automated by dynamic injection into `.idea/workspace.xml`.

@@ -2,10 +2,14 @@ package mindeploy
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import mindeploy.task.mindustry.RunClient
-import mindeploy.task.mindustry.RunServer
-import mindeploy.task.move.MoveClientJars
-import mindeploy.task.move.MoveServerJars
+import mindeploy.dsl.tree.child
+import mindeploy.dsl.tree.treeOf
+import mindeploy.impl.task.mindustry.RunClient
+import mindeploy.impl.task.mindustry.RunServer
+import mindeploy.impl.task.mindustry.RunVanillaClient
+import mindeploy.impl.task.mindustry.RunVanillaServer
+import mindeploy.impl.task.move.MoveClientJars
+import mindeploy.impl.task.move.MoveServerJars
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy
@@ -32,12 +36,7 @@ open class Mindeploy : Plugin<Project> {
 
     val Project.mindeployCache: File
         get() {
-            return File("${project.buildDir}/${Mindeploy.name}/")
-        }
-
-    val Project.runDir: File
-        get() {
-            return File("${project.projectDir}/run/")
+            return File("${buildDir}/${Mindeploy.name}/")
         }
 
     open fun download(link: URL, file: File): File {
@@ -60,52 +59,35 @@ open class Mindeploy : Plugin<Project> {
 
     /** @return whether all necessary folders exist */
     fun Project.generateMindeployFolders(): Boolean {
-        val libs = File("$buildDir/libs/")
-
-        val run = project.runDir
-
-        val clientRun = run.toPath().resolve("client").toFile()
-        val clientMods = clientRun.toPath().resolve("mods").toFile()
-
-        val serverRun = run.toPath().resolve("server").toFile()
-        val serverMods = serverRun.toPath().resolve("config").resolve("mods").toFile()
-
-        if (!libs.exists()) {
-            libs.mkdirs()
-        }
-
-        if (!mindeployCache.exists()) {
-            mindeployCache.mkdirs()
-        }
-
-        if (!run.exists()) {
-            run.mkdirs()
-
-            if (!clientRun.exists()) {
-                clientRun.mkdirs()
-
-                if (!clientMods.exists()) {
-                    clientMods.mkdirs()
-                }
+        val folders = treeOf(projectDir) {
+            child("build/") {
+                child("libs/")
+                child(Mindeploy.name)
             }
 
-            if (!serverRun.exists()) {
-                serverRun.mkdirs()
+            child("run/") {
+                child("vanilla/") {
+                    child("client/")
+                    child("server/")
+                }
 
-                if (!serverMods.exists()) {
-                    serverMods.mkdirs()
+                child("modded/") {
+                    child("client/") {
+                        child("mods/")
+                    }
+
+                    child("server/") {
+                        child("config/") {
+                            child("mods/")
+                        }
+                    }
                 }
             }
         }
 
-        val folders = listOf(
-            libs,
-            run,
-            clientRun,
-            clientMods,
-            serverRun,
-            serverMods
-        )
+        for (folder in folders) {
+            if (!folder.exists()) folder.mkdir()
+        }
 
         return folders.all { it.exists() }
     }
@@ -186,7 +168,8 @@ open class Mindeploy : Plugin<Project> {
 
                     exec {
                         workingDir = File("${buildDir}/libs/")
-                        val command = "d8 $dependencies --min-api 14 --output ${project.name}-Android.jar ${project.name}-Desktop.jar"
+                        val command =
+                            "d8 $dependencies --min-api 14 --output ${project.name}-Android.jar ${project.name}-Desktop.jar"
 
                         commandLine(command.split(" "))
                     }
@@ -246,6 +229,9 @@ open class Mindeploy : Plugin<Project> {
             task<RunServer>("runServer") {
                 dependsOn("moveServerJars")
             }
+
+            task<RunVanillaClient>("runVanillaClient")
+            task<RunVanillaServer>("runVanillaServer")
         }
     }
 

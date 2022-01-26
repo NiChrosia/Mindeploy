@@ -1,4 +1,4 @@
-package mindeploy.task.move
+package mindeploy.impl.task.move
 
 import org.gradle.api.DefaultTask
 import java.io.File

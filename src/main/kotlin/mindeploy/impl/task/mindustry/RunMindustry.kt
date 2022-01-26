@@ -1,16 +1,13 @@
-package mindeploy.task.mindustry
+package mindeploy.impl.task.mindustry
 
 import mindeploy.Mindeploy
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.JavaExec
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.provideDelegate
 import java.io.File
 
-abstract class RunMindustry : JavaExec() {
-    abstract val side: String
-
-    abstract val dataDirectory: File
-
+abstract class RunMindustry(@Internal open val side: String, @Internal open val dataDirectory: File) : JavaExec() {
     init {
         dependsOn("downloadMindustry")
 
